@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Virtual Try-On Application
+
+This is a web application built with Next.js that allows users to virtually try on clothing items using AI. Users upload a photo of themselves and a photo of a clothing item, and the application leverages the Google Gemini API to generate an image simulating the user wearing the clothing.
+
+## Features
+
+*   👤 **User Image Upload:** Upload a photo of yourself.
+*   👕 **Clothing Image Upload:** Upload a photo of a clothing item.
+*   🖼️ **Image Previews:** See previews of the uploaded images.
+*   ✨ **AI-Powered Try-On:** Uses the Google Gemini API (specifically a flash experimental model) to generate the virtual try-on image.
+*   ✅ **Result Display:** Shows the generated image result.
+*   ⏳ **Loading State:** Displays a loading indicator while the AI is processing.
+*   🔄 **Reset Functionality:** Easily clear all inputs and results.
+*   🎨 **Simple UI:** Clean interface built with Tailwind CSS.
+
+## Technology Stack
+
+*   **Framework:** [Next.js](https://nextjs.org/) (v13+ with App Router)
+*   **Language:** [TypeScript](https://www.typescriptlang.org/)
+*   **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+*   **AI Model:** [Google Gemini API](https://ai.google.dev/gemini-api) (via `@google/genai` SDK)
+*   **Icons:** [Lucide React](https://lucide.dev/)
+*   **Package Manager:** npm
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+*   [Node.js](https://nodejs.org/) (v18.x or later recommended)
+*   [npm](https://www.npmjs.com/) (usually comes with Node.js)
+*   A **Google Gemini API Key**: You can obtain one from [Google AI Studio](https://aistudio.google.com/app/apikey).
 
 ## Getting Started
 
-First, run the development server:
+Follow these steps to set up and run the application locally:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1.  **Clone the Repository (or Download Code):**
+    ```bash
+    # Replace with your actual repository URL if applicable
+    git clone https://github.com/oyeolamilekan/gemini-ai-tryon.git
+    cd gemini-ai-tryon
+    ```
+    Alternatively, if you have the code locally, navigate to the project's root directory.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2.  **Install Dependencies:**
+    ```bash
+    npm install
+    ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3.  **Set Up Environment Variables:**
+    *   Create a new file named `.env.local` in the root of your project directory.
+    *   Add your Google Gemini API Key to this file:
+        ```plaintext
+        # .env.local
+        GEMINI_API_KEY=YOUR_GOOGLE_GEMINI_API_KEY
+        ```
+    *   Replace `YOUR_GOOGLE_GEMINI_API_KEY` with the actual key you obtained from Google AI Studio.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4.  **Run the Development Server:**
+    ```bash
+    npm run dev
+    ```
 
-## Learn More
+5.  **Open the Application:**
+    Open your web browser and navigate to `http://localhost:3000`.
 
-To learn more about Next.js, take a look at the following resources:
+## Usage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  The application interface will load.
+2.  Click the "Upload Your Photo" input section (or the button within it) and select an image file of a person. A preview will appear.
+3.  Click the "Upload Clothing Item" input section and select an image file of a clothing item. A preview will appear.
+4.  Click the "Try It On!" button.
+5.  A loading indicator will appear while the AI generates the image. This may take several seconds.
+6.  If successful, the resulting "try-on" image will be displayed below the form.
+7.  If an error occurs (e.g., API issue, invalid input), an error message will be displayed. Check the browser console and backend terminal logs for more details.
+8.  Click the "Reset" button at any time to clear the uploaded images, previews, results, and any error messages.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## API Endpoint (`/api/tryon`)
 
-## Deploy on Vercel
+*   **Method:** `POST`
+*   **Request Body:** Expects `FormData` containing:
+    *   `userImage`: The File object for the user's photo.
+    *   `clothingImage`: The File object for the clothing item's photo.
+*   **Response Body (Success):**
+    ```json
+    {
+      "image": "data:image/png;base64,...", // Base64 encoded data URL of the generated image
+      "description": "Text description from the AI (if any)"
+    }
+    ```
+*   **Response Body (Error):**
+    ```json
+    {
+      "error": "Error message string",
+      "details": "Optional error details string"
+    }
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT License
+
+Copyright (c) 2025 Oye Olamilekan
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
